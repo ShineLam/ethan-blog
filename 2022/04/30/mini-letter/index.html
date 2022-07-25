@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>小程序首字母检索 | 发际线守护联盟</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    
+    <meta name="description" content="
+
+首字母检索项的值对应数据列的元素的id
+通过createSelectorQuery获取检索项每项的坐标信息(因为目前通过touchmove无法直接获取到手指所在元素)
+通过点击/滑动获取到首字母检索项的值，点击直接通过点击事件获取检索项的值，滚动通过touchmove获取手指所在的坐标信息，判断是否在某一个检索项范围中
+动态设置scroll-view的[`scr ...">
+    
+    <link rel="preload" href="/ethan-blog/assets/css/0.styles.ae8593c0.css" as="style"><link rel="preload" href="/ethan-blog/assets/js/app.b653adef.js" as="script"><link rel="preload" href="/ethan-blog/assets/js/6.eaa784eb.js" as="script"><link rel="preload" href="/ethan-blog/assets/js/3.4a714191.js" as="script"><link rel="preload" href="/ethan-blog/assets/js/19.4580b41e.js" as="script"><link rel="prefetch" href="/ethan-blog/assets/js/10.54a3b464.js"><link rel="prefetch" href="/ethan-blog/assets/js/11.4083a017.js"><link rel="prefetch" href="/ethan-blog/assets/js/12.557c7903.js"><link rel="prefetch" href="/ethan-blog/assets/js/13.fb6f962b.js"><link rel="prefetch" href="/ethan-blog/assets/js/14.4fbdf27b.js"><link rel="prefetch" href="/ethan-blog/assets/js/15.de82cef3.js"><link rel="prefetch" href="/ethan-blog/assets/js/16.c72ba896.js"><link rel="prefetch" href="/ethan-blog/assets/js/17.346a6371.js"><link rel="prefetch" href="/ethan-blog/assets/js/18.41f14642.js"><link rel="prefetch" href="/ethan-blog/assets/js/20.d72342a9.js"><link rel="prefetch" href="/ethan-blog/assets/js/21.55c6b478.js"><link rel="prefetch" href="/ethan-blog/assets/js/22.0d7c0991.js"><link rel="prefetch" href="/ethan-blog/assets/js/23.a5dc5845.js"><link rel="prefetch" href="/ethan-blog/assets/js/24.5c78a5b3.js"><link rel="prefetch" href="/ethan-blog/assets/js/4.f8a938ae.js"><link rel="prefetch" href="/ethan-blog/assets/js/5.d80c7971.js"><link rel="prefetch" href="/ethan-blog/assets/js/7.7bbab673.js"><link rel="prefetch" href="/ethan-blog/assets/js/8.2907f61b.js"><link rel="prefetch" href="/ethan-blog/assets/js/9.45759198.js"><link rel="prefetch" href="/ethan-blog/assets/js/vuejs-paginate.1946e7b8.js">
+    <link rel="stylesheet" href="/ethan-blog/assets/css/0.styles.ae8593c0.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="vuepress-theme-blog__global-layout"><section id="header-wrapper"><header id="header"><div class="header-wrapper"><div class="title"><a href="/ethan-blog/" class="nav-link home-link">发际线守护联盟 </a></div> <div class="header-right-wrap"><ul class="nav"><li class="nav-item"><a href="/ethan-blog/" class="nav-link">Home</a></li><li class="nav-item"><a href="/ethan-blog/tag/" class="nav-link">Tag</a></li><li class="nav-item"><a href="/ethan-blog/about/" class="nav-link">About</a></li><li class="nav-item"><a href="https://github.com/ShineLam" target="_blank" rel="noopener noreferrer" class="nav-link external">Github</a></li></ul> <div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></div></header></section> <div id="mobile-header"><div class="mobile-header-bar"><div class="mobile-header-title"><a href="/ethan-blog/" class="nav-link mobile-home-link">发际线守护联盟 </a> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></div> <div class="mobile-menu-wrapper"><hr class="menu-divider"> <ul class="mobile-nav"><li class="mobile-nav-item"><a href="/ethan-blog/" class="nav-link">Home</a></li><li class="mobile-nav-item"><a href="/ethan-blog/tag/" class="nav-link">Tag</a></li><li class="mobile-nav-item"><a href="/ethan-blog/about/" class="nav-link">About</a></li><li class="mobile-nav-item"><a href="https://github.com/ShineLam" target="_blank" rel="noopener noreferrer" class="nav-link external">Github</a></li> <li class="mobile-nav-item"><!----></li></ul></div></div></div> <div class="content-wrapper"><div id="vuepress-theme-blog__post-layout"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><header><h1 itemprop="name headline" class="post-title">
+        小程序首字母检索
+      </h1> <div class="post-meta"><div itemprop="publisher author" itemtype="http://schema.org/Person" itemscope="itemscope" class="post-meta-author"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-navigation"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg> <span itemprop="name">Ethan</span> <span itemprop="address">   in Shenzhen</span></div> <div class="post-meta-date"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> <time pubdate itemprop="datePublished" datetime="2022-04-30T00:00:00.000Z">
+      Sat Apr 30 2022
+    </time></div> <ul itemprop="keywords" class="post-meta-tags"><li class="post-tag" data-v-42ccfcd5><a href="/ethan-blog/tag/小程序" data-v-42ccfcd5><span data-v-42ccfcd5>小程序</span></a></li><li class="post-tag" data-v-42ccfcd5><a href="/ethan-blog/tag/组件" data-v-42ccfcd5><span data-v-42ccfcd5>组件</span></a></li></ul></div></header> <div itemprop="articleBody" class="content__default"><h2 id="主要思路"><a href="#主要思路" class="header-anchor">#</a> 主要思路</h2> <ul><li>首字母检索项的值对应数据列的元素的id</li> <li>通过<code>createSelectorQuery</code>获取检索项每项的坐标信息(因为目前通过<code>touchmove</code>无法直接获取到手指所在元素)</li> <li>通过点击/滑动获取到首字母检索项的值，点击直接通过点击事件获取检索项的值，滚动通过<code>touchmove</code>获取手指所在的坐标信息，判断是否在某一个检索项范围中</li> <li>动态设置<code>scroll-view</code>的<a href="https://developers.weixin.qq.com/miniprogram/dev/component/scroll-view.html" target="_blank" rel="noopener noreferrer"><code>scroll-into-view</code><span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>的值，达到滚动到对应id的检索数据列</li></ul> <h2 id="wxml"><a href="#wxml" class="header-anchor">#</a> wxml</h2> <div class="language-html extra-class"><pre class="language-html"><code><span class="token comment">&lt;!-- 数据列表两层循环，外层为分组 ，内层为列表 --&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>view</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>scroll-view</span> <span class="token attr-name">scroll-into-view</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>{{scrollIntoVw}}<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">scroll-y</span> 
+        <span class="token attr-name">scroll-with-animation</span>
+        <span class="token attr-name">enable-back-to-top</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>view</span> <span class="token attr-name"><span class="token namespace">wx:</span>for</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>{{list}}<span class="token punctuation">&quot;</span></span> <span class="token attr-name"><span class="token namespace">wx:</span>key</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>index<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+      <span class="token comment">&lt;!-- 设置id，即对应检索滚动的位置 --&gt;</span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>view</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>{{item.group}}<span class="token punctuation">&quot;</span></span>     
+            <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>group-type<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>{{item.group}}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>view</span><span class="token punctuation">&gt;</span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>view</span> <span class="token attr-name"><span class="token namespace">wx:</span>for</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>{{item.li}}<span class="token punctuation">&quot;</span></span>
+            <span class="token attr-name"><span class="token namespace">wx:</span>for-item</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>itm<span class="token punctuation">&quot;</span></span>
+            <span class="token attr-name"><span class="token namespace">wx:</span>for-index</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>idx<span class="token punctuation">&quot;</span></span>
+            <span class="token attr-name"><span class="token namespace">wx:</span>key</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>idx<span class="token punctuation">&quot;</span></span>
+            <span class="token attr-name">data-i</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>{{index + <span class="token punctuation">'</span>_<span class="token punctuation">'</span> + idx}}<span class="token punctuation">&quot;</span></span>
+            <span class="token attr-name">bindtap</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>onBrand<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>view</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>group-item<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>view</span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>image</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>image</span><span class="token punctuation">&gt;</span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>view</span><span class="token punctuation">&gt;</span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>text</span><span class="token punctuation">&gt;</span></span>{{itm.name}}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>text</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>view</span><span class="token punctuation">&gt;</span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>view</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>view</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>scroll-view</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>view</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token comment">&lt;!--首字母检索列表--&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>view</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>wrap-index<span class="token punctuation">&quot;</span></span> <span class="token attr-name"><span class="token namespace">catch:</span>touchmove</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>touchmove<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>view</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>index {{flag == item ? <span class="token punctuation">'</span>active<span class="token punctuation">'</span> : <span class="token punctuation">'</span><span class="token punctuation">'</span>}}<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name"><span class="token namespace">wx:</span>for</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>{{abc}}<span class="token punctuation">&quot;</span></span> <span class="token attr-name"><span class="token namespace">wx:</span>key</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>index<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">data-id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>{{item}}<span class="token punctuation">&quot;</span></span> <span class="token attr-name">bindtap</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>onIndex<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>{{item}}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>view</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>view</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><h2 id="wxss"><a href="#wxss" class="header-anchor">#</a> wxss</h2> <div class="language-css extra-class"><pre class="language-css"><code><span class="token selector">scroll-view</span> <span class="token punctuation">{</span>
+  <span class="token property">height</span><span class="token punctuation">:</span> 100vh<span class="token punctuation">;</span> // 设置高度才能滚动
+<span class="token punctuation">}</span>
+
+<span class="token selector">.group-type</span> <span class="token punctuation">{</span>
+  <span class="token property">font-size</span><span class="token punctuation">:</span> 24rpx<span class="token punctuation">;</span>
+  <span class="token property">color</span><span class="token punctuation">:</span> #666<span class="token punctuation">;</span>
+  <span class="token property">background-color</span><span class="token punctuation">:</span> #F7F7F7<span class="token punctuation">;</span>
+  <span class="token property">padding</span><span class="token punctuation">:</span> 4rpx 40rpx<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector">.group-item</span> <span class="token punctuation">{</span>
+  <span class="token property">display</span><span class="token punctuation">:</span> flex<span class="token punctuation">;</span>
+  <span class="token property">align-items</span><span class="token punctuation">:</span> center<span class="token punctuation">;</span>
+  <span class="token property">font-size</span><span class="token punctuation">:</span> 28rpx<span class="token punctuation">;</span>
+  <span class="token property">padding</span><span class="token punctuation">:</span> 8rpx 22rpx<span class="token punctuation">;</span>
+  <span class="token property">background-color</span><span class="token punctuation">:</span> #fff<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector">.group-item image</span> <span class="token punctuation">{</span>
+  <span class="token property">width</span><span class="token punctuation">:</span> 80rpx<span class="token punctuation">;</span>
+  <span class="token property">height</span><span class="token punctuation">:</span> 80rpx<span class="token punctuation">;</span>
+  <span class="token property">background-color</span><span class="token punctuation">:</span> #F7F7F7<span class="token punctuation">;</span>
+  <span class="token property">margin-right</span><span class="token punctuation">:</span> 20rpx<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector">.wrap-index</span> <span class="token punctuation">{</span>
+  <span class="token property">display</span><span class="token punctuation">:</span> flex<span class="token punctuation">;</span>
+  <span class="token property">flex-direction</span><span class="token punctuation">:</span> column<span class="token punctuation">;</span>
+  <span class="token property">align-items</span><span class="token punctuation">:</span> center<span class="token punctuation">;</span>
+  <span class="token property">justify-content</span><span class="token punctuation">:</span> center<span class="token punctuation">;</span>
+  <span class="token property">padding</span><span class="token punctuation">:</span> 16rpx<span class="token punctuation">;</span>
+  <span class="token property">position</span><span class="token punctuation">:</span> fixed<span class="token punctuation">;</span>
+  <span class="token property">top</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span>
+  <span class="token property">bottom</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span>
+  <span class="token property">right</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span>
+  <span class="token property">z-index</span><span class="token punctuation">:</span> 100<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector">.wrap-index&gt;view</span> <span class="token punctuation">{</span>
+  <span class="token property">width</span><span class="token punctuation">:</span> 34rpx<span class="token punctuation">;</span>
+  <span class="token property">height</span><span class="token punctuation">:</span> 34rpx<span class="token punctuation">;</span>
+  <span class="token property">font-size</span><span class="token punctuation">:</span> 24rpx<span class="token punctuation">;</span>
+  <span class="token property">text-align</span><span class="token punctuation">:</span> center<span class="token punctuation">;</span>
+  <span class="token property">color</span><span class="token punctuation">:</span> #666<span class="token punctuation">;</span>
+  <span class="token property">border-radius</span><span class="token punctuation">:</span> 50%<span class="token punctuation">;</span>
+  <span class="token property">padding</span><span class="token punctuation">:</span> 6rpx<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector">.wrap-index&gt;.active</span> <span class="token punctuation">{</span>
+  <span class="token property">color</span><span class="token punctuation">:</span> #fff<span class="token punctuation">;</span>
+  <span class="token property">background-color</span><span class="token punctuation">:</span> #CC2B22<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h2 id="js"><a href="#js" class="header-anchor">#</a> js</h2> <div class="language-js extra-class"><pre class="language-js"><code><span class="token literal-property property">data</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">flag</span><span class="token operator">:</span> <span class="token string">'A'</span><span class="token punctuation">,</span> <span class="token comment">// 设置检索项选中样式</span>
+    scrollIntoVw：<span class="token string">''</span><span class="token punctuation">,</span> <span class="token comment">// scroll-into-view</span>
+    <span class="token literal-property property">indexPos</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token comment">// 储存检索项位置信息</span>
+    <span class="token comment">// 列表数据结构</span>
+    <span class="token literal-property property">list</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">{</span>
+        <span class="token literal-property property">group</span><span class="token operator">:</span> <span class="token string">'A'</span><span class="token punctuation">,</span> <span class="token literal-property property">li</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token punctuation">{</span> <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'奥迪'</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+          <span class="token punctuation">{</span> <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'阿尔法·罗密欧'</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+          <span class="token operator">...</span>
+        <span class="token punctuation">]</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+        <span class="token literal-property property">group</span><span class="token operator">:</span> <span class="token string">'B'</span><span class="token punctuation">,</span> <span class="token literal-property property">li</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token punctuation">{</span> <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'比亚迪'</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+          <span class="token punctuation">{</span> <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'宝马'</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+          <span class="token operator">...</span>
+        <span class="token punctuation">]</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">abc</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token comment">// 首字母检索数组，直接定义变量或方法生成</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span>
+
+<span class="token function">touchmove</span><span class="token punctuation">(</span><span class="token parameter">e</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 节流</span>
+    <span class="token keyword">let</span> now <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>now <span class="token operator">-</span> timestamp <span class="token operator">&lt;</span> <span class="token number">50</span><span class="token punctuation">)</span> <span class="token keyword">return</span>
+    timestamp <span class="token operator">=</span> now
+    
+    <span class="token comment">// 双指/多指/误触</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>e<span class="token punctuation">.</span>touches<span class="token punctuation">.</span>length <span class="token operator">&gt;</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">return</span>
+    
+    <span class="token comment">// 判断手指滑动位置坐标是否在元素top和bottom之间</span>
+    <span class="token keyword">let</span> y <span class="token operator">=</span> e<span class="token punctuation">.</span>touches<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>clientY
+    <span class="token keyword">let</span> indexPos <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>data<span class="token punctuation">.</span>indexPos
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> item <span class="token keyword">of</span> indexPos<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>y <span class="token operator">&gt;=</span> item<span class="token punctuation">.</span>top <span class="token operator">&amp;&amp;</span> y <span class="token operator">&lt;=</span> item<span class="token punctuation">.</span>bottom<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">scroll2Vw</span><span class="token punctuation">(</span>item<span class="token punctuation">.</span>dataset<span class="token punctuation">.</span>id<span class="token punctuation">)</span>
+        <span class="token keyword">break</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token function">scroll2Vw</span><span class="token punctuation">(</span><span class="token parameter">id</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setData</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+      <span class="token literal-property property">scrollIntoVw</span><span class="token operator">:</span> id<span class="token punctuation">,</span>
+      <span class="token literal-property property">flag</span><span class="token operator">:</span> id
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token comment">// 点击获取id</span>
+<span class="token function">onIndex</span><span class="token punctuation">(</span><span class="token parameter">e</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> id <span class="token operator">=</span> e<span class="token punctuation">.</span>currentTarget<span class="token punctuation">.</span>dataset<span class="token punctuation">.</span>id
+    <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">scroll2Vw</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span>
+
+<span class="token function">onReady</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 存储检索项位置信息</span>
+    <span class="token keyword">let</span> self <span class="token operator">=</span> <span class="token keyword">this</span>
+    wx<span class="token punctuation">.</span><span class="token function">createSelectorQuery</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">selectAll</span><span class="token punctuation">(</span><span class="token string">'.wrap-index .index'</span><span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">boundingClientRect</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">exec</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">res</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">let</span> indexPos <span class="token operator">=</span> res<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+        self<span class="token punctuation">.</span><span class="token function">setData</span><span class="token punctuation">(</span><span class="token punctuation">{</span> indexPos <span class="token punctuation">}</span><span class="token punctuation">)</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h2 id="e-touches数据结构"><a href="#e-touches数据结构" class="header-anchor">#</a> e.touches数据结构</h2> <div class="language-js extra-class"><pre class="language-js"><code><span class="token punctuation">[</span><span class="token punctuation">{</span>
+    <span class="token literal-property property">clientX</span><span class="token operator">:</span> <span class="token number">356</span>
+    <span class="token literal-property property">clientY</span><span class="token operator">:</span> <span class="token number">155</span>
+    <span class="token literal-property property">force</span><span class="token operator">:</span> <span class="token number">1</span>
+    <span class="token literal-property property">identifier</span><span class="token operator">:</span> <span class="token number">0</span>
+    <span class="token literal-property property">pageX</span><span class="token operator">:</span> <span class="token number">356</span>
+    <span class="token literal-property property">pageY</span><span class="token operator">:</span> <span class="token number">155</span> 
+<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token operator">...</span><span class="token punctuation">]</span>
+</code></pre></div><h2 id="indexpos数据结构"><a href="#indexpos数据结构" class="header-anchor">#</a> indexPos数据结构</h2> <div class="language-js extra-class"><pre class="language-js"><code><span class="token punctuation">[</span><span class="token punctuation">{</span>
+    <span class="token literal-property property">bottom</span><span class="token operator">:</span> <span class="token number">93.5</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">dataset</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token literal-property property">id</span><span class="token operator">:</span> <span class="token string">&quot;A&quot;</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">height</span><span class="token operator">:</span> <span class="token number">19</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">id</span><span class="token operator">:</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">left</span><span class="token operator">:</span> <span class="token number">381</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">right</span><span class="token operator">:</span> <span class="token number">414</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">top</span><span class="token operator">:</span> <span class="token number">74.5</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">width</span><span class="token operator">:</span> <span class="token number">33</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token operator">...</span><span class="token punctuation">]</span>
+</code></pre></div></div> <footer><!----> <hr> <!----></footer></article> <div class="sticker vuepress-toc"><div class="vuepress-toc-item vuepress-toc-h2 active"><a href="#主要思路" title="主要思路">主要思路</a></div><div class="vuepress-toc-item vuepress-toc-h2"><a href="#wxml" title="wxml">wxml</a></div><div class="vuepress-toc-item vuepress-toc-h2"><a href="#wxss" title="wxss">wxss</a></div><div class="vuepress-toc-item vuepress-toc-h2"><a href="#js" title="js">js</a></div><div class="vuepress-toc-item vuepress-toc-h2"><a href="#e-touches数据结构" title="e.touches数据结构">e.touches数据结构</a></div><div class="vuepress-toc-item vuepress-toc-h2"><a href="#indexpos数据结构" title="indexPos数据结构">indexPos数据结构</a></div></div></div></div> <footer class="footer" data-v-3d9deeb8><div class="footer-left-wrap" data-v-3d9deeb8><ul class="contact" data-v-3d9deeb8><li class="contact-item" data-v-3d9deeb8><a href="https://github.com/ShineLam" target="_blank" rel="noopener noreferrer" class="nav-link external" data-v-3d9deeb8><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github" data-v-3d9deeb8><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" data-v-3d9deeb8></path></svg>
+          
+        </a></li><li class="contact-item" data-v-3d9deeb8><a href="/ethan-blog/2022/04/30/mini-letter/ethan_lamv@163.com.html" class="nav-link" data-v-3d9deeb8><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail" data-v-3d9deeb8><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" data-v-3d9deeb8></path><polyline points="22,6 12,13 2,6" data-v-3d9deeb8></polyline></svg>
+          
+        </a></li><li class="contact-item" data-v-3d9deeb8><a href="/ethan-blog/2022/04/30/mini-letter/ethan_lamv@163.com.html" class="nav-link" data-v-3d9deeb8><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-music" data-v-3d9deeb8><path d="M9 18V5l12-2v13" data-v-3d9deeb8></path><circle cx="6" cy="18" r="3" data-v-3d9deeb8></circle><circle cx="18" cy="16" r="3" data-v-3d9deeb8></circle></svg>
+          
+        </a></li><li class="contact-item" data-v-3d9deeb8><a href="/ethan-blog/2022/04/30/mini-letter/ethan_lamv@163.com.html" class="nav-link" data-v-3d9deeb8><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-video" data-v-3d9deeb8><polygon points="23 7 16 12 23 17 23 7" data-v-3d9deeb8></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2" data-v-3d9deeb8></rect></svg>
+          
+        </a></li></ul></div> <div class="footer-right-wrap" data-v-3d9deeb8><ul class="copyright" data-v-3d9deeb8><li class="copyright-item" data-v-3d9deeb8>Made By Ethan</li></ul></div></footer></div><div class="global-ui"></div></div>
+    <script src="/ethan-blog/assets/js/app.b653adef.js" defer></script><script src="/ethan-blog/assets/js/6.eaa784eb.js" defer></script><script src="/ethan-blog/assets/js/3.4a714191.js" defer></script><script src="/ethan-blog/assets/js/19.4580b41e.js" defer></script>
+  </body>
+</html>
